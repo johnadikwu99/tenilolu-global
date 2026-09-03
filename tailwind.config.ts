@@ -1,0 +1,90 @@
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  content: [
+    './app/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#faf8f6',
+          100: '#f5f0eb',
+          200: '#e8dfd5',
+          300: '#dcc8be',
+          400: '#c4a577',
+          500: '#b39558',
+          600: '#8b753f',
+          700: '#6d5d33',
+          800: '#4a3f26',
+          900: '#2d261a',
+        },
+        secondary: {
+          50: '#fafaf9',
+          100: '#f5f5f3',
+          200: '#ececea',
+          300: '#d6d6d3',
+          400: '#a5a5a0',
+          500: '#7f7f7a',
+          600: '#5a5a54',
+          700: '#3d3d38',
+          800: '#262621',
+          900: '#1a1a17',
+        },
+        success: '#10b981',
+        warning: '#f59e0b',
+        error: '#ef4444',
+        info: '#3b82f6',
+      },
+      fontFamily: {
+        sans: ['system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        xs: ['0.75rem', { lineHeight: '1rem' }],
+        sm: ['0.875rem', { lineHeight: '1.25rem' }],
+        base: ['1rem', { lineHeight: '1.5rem' }],
+        lg: ['1.125rem', { lineHeight: '1.75rem' }],
+        xl: ['1.25rem', { lineHeight: '1.75rem' }],
+        '2xl': ['1.5rem', { lineHeight: '2rem' }],
+        '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+        '5xl': ['3rem', { lineHeight: '1' }],
+      },
+      spacing: {
+        px: '1px',
+        0: '0',
+        1: '0.25rem',
+        2: '0.5rem',
+        3: '0.75rem',
+        4: '1rem',
+        6: '1.5rem',
+        8: '2rem',
+        12: '3rem',
+        16: '4rem',
+        20: '5rem',
+        24: '6rem',
+        32: '8rem',
+      },
+      borderRadius: {
+        none: '0',
+        sm: '0.25rem',
+        DEFAULT: '0.375rem',
+        md: '0.5rem',
+        lg: '0.75rem',
+        xl: '1rem',
+        full: '9999px',
+      },
+      boxShadow: {
+        none: 'none',
+        sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        DEFAULT: '0 1px 3px 0 rgb(0 0 0 / 0.1)',
+        md: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+        lg: '0 10px 15px -3px rgb(0 0 0 / 0.1)',
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;
