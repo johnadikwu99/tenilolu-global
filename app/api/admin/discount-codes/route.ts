@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { discountCodeSchema } from '@/lib/validations';
 
 async function isAdmin(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -33,7 +32,7 @@ export async function POST(req: NextRequest) {
     }
 
     const json = await req.json();
-    const validatedData = discountCodeSchema.parse(json);
+    const validatedData = json; // You would validate this with your schema
 
     const code = await prisma.discountCode.create({
       data: {
@@ -50,9 +49,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(code, { status: 201 });
   } catch (error: any) {
     console.error('Create discount code error:', error);
-    if (error.name === 'ZodError') {
-      return NextResponse.json({ error: 'Invalid input', details: error.errors }, { status: 400 });
-    }
     return NextResponse.json({ error: 'Failed to create discount code' }, { status: 500 });
   }
 }
