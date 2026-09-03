@@ -16,10 +16,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 
     const customer = await prisma.customer.findUnique({
       where: { id: params.id },
-      include: {
-        user: true,
-        _count: { select: { user: true } },
-      },
+      include: { user: true },
     });
 
     if (!customer) {

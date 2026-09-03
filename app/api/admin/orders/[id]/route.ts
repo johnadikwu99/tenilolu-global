@@ -47,7 +47,6 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     if (paymentStatus) updateData.paymentStatus = paymentStatus;
     if (notes !== undefined) updateData.notes = notes;
 
-    // Update timestamps based on status
     if (status === 'CONFIRMED') updateData.confirmedAt = new Date();
     if (status === 'PROCESSING') updateData.processingAt = new Date();
     if (status === 'SHIPPED') updateData.shippedAt = new Date();

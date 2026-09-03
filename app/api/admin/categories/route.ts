@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { categorySchema } from '@/lib/validations';
 
 async function isAdmin(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -34,22 +33,18 @@ export async function POST(req: NextRequest) {
     }
 
     const json = await req.json();
-    const validatedData = categorySchema.parse(json);
 
     const category = await prisma.category.create({
       data: {
-        name: validatedData.name,
-        slug: validatedData.name.toLowerCase().replace(/\s+/g, '-'),
-        description: validatedData.description,
+        name: json.name,
+        slug: json.name.toLowerCase().replace(/\s+/g, '-'),
+        description: json.description,
       },
     });
 
     return NextResponse.json(category, { status: 201 });
   } catch (error: any) {
     console.error('Create category error:', error);
-    if (error.name === 'ZodError') {
-      return NextResponse.json({ error: 'Invalid input', details: error.errors }, { status: 400 });
-    }
     return NextResponse.json({ error: 'Failed to create category' }, { status: 500 });
   }
 }

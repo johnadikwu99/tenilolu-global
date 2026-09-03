@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { productSchema } from '@/lib/validations';
 
 async function isAdmin(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -60,19 +59,18 @@ export async function POST(req: NextRequest) {
     }
 
     const json = await req.json();
-    const validatedData = productSchema.parse(json);
 
     const product = await prisma.product.create({
       data: {
-        name: validatedData.name,
-        slug: validatedData.name.toLowerCase().replace(/\s+/g, '-'),
-        description: validatedData.description,
-        price: validatedData.price,
-        cost: validatedData.cost,
-        stock: validatedData.stock,
-        categoryId: validatedData.categoryId,
-        ingredients: validatedData.ingredients,
-        featured: validatedData.featured || false,
+        name: json.name,
+        slug: json.name.toLowerCase().replace(/\s+/g, '-'),
+        description: json.description,
+        price: json.price,
+        cost: json.cost,
+        stock: json.stock,
+        categoryId: json.categoryId,
+        ingredients: json.ingredients,
+        featured: json.featured || false,
       },
       include: { category: true },
     });
@@ -80,9 +78,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(product, { status: 201 });
   } catch (error: any) {
     console.error('Create product error:', error);
-    if (error.name === 'ZodError') {
-      return NextResponse.json({ error: 'Invalid input', details: error.errors }, { status: 400 });
-    }
     return NextResponse.json({ error: 'Failed to create product' }, { status: 500 });
   }
 }
